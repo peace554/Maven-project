@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+    tools {
+        maven 'Maven-3.9' // Make sure 'Maven' matches the name in your Global Tool Configuration
+        jdk 'JDK-21'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                // This pulls your specific branch
+                git branch: 'JUnit-Test', url: 'https://github.com'
+            }
+        }
+        stage('Build') {
+            steps {
+                dir('Task2-BorderLayout') {
+                    bat 'mvn clean compile'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                dir('Task2-BorderLayout') {
+                    bat 'mvn test'
+                }
+            }
+        }
+    }
+}
