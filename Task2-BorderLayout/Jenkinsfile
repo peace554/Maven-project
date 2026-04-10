@@ -8,7 +8,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // This pulls your specific branch
-                git branch: 'JUnit-Test', url: 'https://github.com'
+                git branch: 'JUnit-Test', url: 'https://github.com/peace554/Maven-project.git'
             }
         }
         stage('Build') {
