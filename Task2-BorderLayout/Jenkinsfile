@@ -25,5 +25,30 @@ pipeline {
                 }
             }
         }
+        stage('Code Quality (SonarQube)') {
+            steps {
+                dir('Task2-BorderLayout') {
+                    // Replace 'MySonarServer' with the Name from Manage Jenkins > System > SonarQube servers
+                    withSonarQubeEnv('SonarQube') {
+                        bat 'mvn sonar:sonar'
+                    }
+                }
+            }
+        }
+        stage('Deploy to Staging') {
+            steps {
+                echo 'All checks passed. Deploying to staging...'
+                dir('Task2-BorderLayout') {
+                    bat 'mvn package -DskipTests'
+                    // Add your specific deployment commands here (e.g., copying files)
+                }
+            }
+        }
+    }
+
+    post {
+        failure {
+            echo 'Pipeline failed. Deployment skipped.'
+        }
     }
 }
